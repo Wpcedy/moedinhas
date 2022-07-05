@@ -1,0 +1,22 @@
+.logo {
+    width: 72px;
+    height: 72px;
+}
+
+#main-container {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+body {
+    color: white;
+    background-color: #FDAA49;
+    min-height: 100vh;
+}
+
+#button {
+    color: white;
+    background: #314BCE;
+    border-color: #314BCE;
+    border-radius: 8px;
+}
