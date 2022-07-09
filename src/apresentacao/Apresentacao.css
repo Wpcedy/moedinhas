@@ -1,0 +1,19 @@
+body {
+    min-height: 100vh;
+}
+
+.font {
+    font-size: 65px;
+    font-family: "Bubblegum Sans"
+}
+
+#alignButton {
+    text-align-last: right;
+}
+
+#buttonWhite {
+    color: black;
+    background: white;
+    border-color: white;
+    border-radius: 8px;
+}
