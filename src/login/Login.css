@@ -1,0 +1,15 @@
+#alignTextLeft {
+    text-align-last: left;
+}
+
+#alignTextRight {
+    text-align-last: right;
+}
+
+#buttonTextBlue {
+    color: #314BCE;
+    background: white;
+    border-color: white;
+    border-radius: 8px;
+    font-size: 16px;
+}

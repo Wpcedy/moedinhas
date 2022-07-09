@@ -5,6 +5,8 @@ import './App.css';
 import Home from './home/Home';
 import Apresentacao from './apresentacao/Apresentacao';
 import Login from './login/Login';
+import Registrar from './registrar/Registrar';
+import RecuperarSenha from './recuperar-senha/RecuperarSenha';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/" element={<Home />}  />
           <Route path="/apresentacao" element={<Apresentacao />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/registrar" element={<Registrar />} />
+          <Route path="/recuperar-senha" element={<RecuperarSenha />} />
         </Routes>
       </Router>
     </div>
