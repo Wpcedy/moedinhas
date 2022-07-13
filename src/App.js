@@ -7,6 +7,7 @@ import Apresentacao from './apresentacao/Apresentacao';
 import Login from './login/Login';
 import Registrar from './registrar/Registrar';
 import RecuperarSenha from './recuperar-senha/RecuperarSenha';
+import TipoUsuario from './tipo-usuario/TipoUsuario';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registrar" element={<Registrar />} />
           <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+          <Route path="/selecao-usuario" element={<TipoUsuario />} />
         </Routes>
       </Router>
     </div>
