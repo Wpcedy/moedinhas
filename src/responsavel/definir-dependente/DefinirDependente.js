@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import './Login.css';
 
-const Login = (props) => {
+const MenuPrincipalResponsavel = (props) => {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
 
@@ -13,13 +12,15 @@ const Login = (props) => {
       event.preventDefault();
       event.stopPropagation();
     }
-    props.setToken(true);
+
+    // const formData = new FormData(event.target),
+    // formDataObj = Object.fromEntries(formData.entries())
     setValidated(true);
-    navigate("/menu-principal");
+  //   navigate("/login") //redireciona após registrar
   };
 
   return (
-    <div className="Login" style={{
+    <div className="MenuPrincipalResponsavel" style={{
       color: 'black',
       background: 'white',
       borderRadius: '25px',
@@ -28,30 +29,21 @@ const Login = (props) => {
     }}>
       <Container>
         <div id="alignTextLeft">
-            <h1 className="font">Log In</h1>
+            <Button id="buttonTextBlue" onClick={() => navigate("/menu-principal")}>VOLTAR</Button>
+        </div>
+        <div id="alignTextLeft">
+            <h1 className="font">Definir Dependente</h1>
+            <p>Por favor insira o <b>email</b> do dependente</p>
         </div>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Group controlId="form.email">
               <Form.Control type="email" name="email" placeholder="Email" required /><br/>
           </Form.Group>
-          <Form.Group controlId="form.senha">
-              <Form.Control type="password" name="senha" placeholder="Senha" required />
-          </Form.Group><br/>
-          <Button id="button" type="submit" size="lg">Log In</Button><br/><br/>
+        <Button id="button" type="submit" size="lg">Definir</Button><br/><br/>
         </Form>
-        <Row>
-          <Col>
-            Não tem uma conta?<br/>
-            <Button id="buttonTextBlue" onClick={() => navigate("/registrar")}>REGISTRE-SE</Button>
-          </Col>
-          <Col>
-            Esqueceu sua senha?<br/>
-            <Button id="buttonTextBlue" onClick={() => navigate("/recuperar-senha")}>RECUPERAR SENHA</Button>
-          </Col>
-        </Row>
       </Container>
     </div>
   );
 }
 
-export default Login;
+export default MenuPrincipalResponsavel;

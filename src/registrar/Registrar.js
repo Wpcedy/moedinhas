@@ -14,6 +14,9 @@ const Registrar = (props) => {
         event.stopPropagation();
       }
 
+    // const formData = new FormData(event.target),
+    // formDataObj = Object.fromEntries(formData.entries())
+    // console.log(formDataObj);
       setValidated(true);
     //   navigate("/login") //redireciona após registrar
     };
@@ -43,6 +46,13 @@ const Registrar = (props) => {
         </Form.Group>
         <Form.Group controlId="form.confirmarsenha">
             <Form.Control type="password" name="confirmarsenha" placeholder="Comfimar Senha" required /><br/>
+        </Form.Group>
+        <Form.Group controlId="form.tipo">
+            <Form.Select name="tipo" required>
+              <option>Selecione o tipo de conta</option>
+              <option value="adulto">Adulto - Controle</option>
+              <option value="infantil">Infantil - Aprendizado</option>
+            </Form.Select><br/>
         </Form.Group>
       <Button id="button" type="submit" size="lg">Registrar</Button><br/><br/>
       </Form>
