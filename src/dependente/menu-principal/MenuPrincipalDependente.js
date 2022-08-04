@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 import userIcon from './user-icon.png';
 import extratoIcon from './extrato.png';
 import objetivosIcon from './objetivos.png';
-import controleIcon from './controle.png';
 
-const MenuPrincipalResponsavel = (props) => {
+const MenuPrincipalDependente = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="MenuPrincipalResponsavel">
+    <div className="MenuPrincipalDependente">
       <div style={{
         color: 'white',
         background: '#FDAA49',
@@ -56,13 +55,6 @@ const MenuPrincipalResponsavel = (props) => {
                 onClick={() => navigate("/definir-dependente")}
               />
             </Col>
-            <Col>
-              <img
-                src={controleIcon}
-                alt="user"
-                onClick={() => navigate("/definir-dependente")}
-              />
-            </Col>
           </Row>
         </Container>
       </div><br />
@@ -81,4 +73,4 @@ const MenuPrincipalResponsavel = (props) => {
   );
 }
 
-export default MenuPrincipalResponsavel;
+export default MenuPrincipalDependente;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const DefinirDependente = (props) => {
+const DefinirResponsavel = (props) => {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
 
@@ -20,7 +20,7 @@ const DefinirDependente = (props) => {
   };
 
   return (
-    <div className="DefinirDependente" style={{
+    <div className="DefinirResponsavel" style={{
       color: 'black',
       background: 'white',
       borderRadius: '25px',
@@ -32,8 +32,8 @@ const DefinirDependente = (props) => {
             <Button id="buttonTextBlue" onClick={() => navigate("/menu-principal")}>VOLTAR</Button>
         </div>
         <div id="alignTextLeft">
-            <h1 className="font">Definir Dependente</h1>
-            <p>Por favor insira o <b>email</b> do dependente</p>
+            <h1 className="font">Definir<br/> Responsável</h1>
+            <p>Por favor insira o <b>email</b> do responsável</p>
         </div>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Group controlId="form.email">
@@ -46,4 +46,4 @@ const DefinirDependente = (props) => {
   );
 }
 
-export default DefinirDependente;
+export default DefinirResponsavel;

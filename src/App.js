@@ -11,6 +11,9 @@ import RecuperarSenha from './recuperar-senha/RecuperarSenha';
 import MenuPrincipalResponsavel from './responsavel/menu-principal/MenuPrincipalResponsavel';
 import DefinirDependente from './responsavel/definir-dependente/DefinirDependente';
 
+import MenuPrincipalDependente from './dependente/menu-principal/MenuPrincipalDependente';
+import DefinirResponsavel from './dependente/definir-responsavel/DefinirResponsavel';
+
 function App() {
   const [token, setToken] = useState();
 
