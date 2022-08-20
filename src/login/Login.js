@@ -44,10 +44,10 @@ const Login = (props) => {
             Não tem uma conta?<br/>
             <Button id="buttonTextBlue" onClick={() => navigate("/registrar")}>REGISTRE-SE</Button>
           </Col>
-          <Col>
+          {/* <Col>
             Esqueceu sua senha?<br/>
             <Button id="buttonTextBlue" onClick={() => navigate("/recuperar-senha")}>RECUPERAR SENHA</Button>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </div>
