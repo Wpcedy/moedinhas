@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 import './Login.css';
 
 const Login = (props) => {
@@ -8,14 +9,24 @@ const Login = (props) => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    toast.success('Successfully toasted!')
+    toast.error("This didn't work.")
+    // toast.promise(
+    //   saveSettings(settings),
+    //    {
+    //      loading: 'Saving...',
+    //      success: <b>Settings saved!</b>,
+    //      error: <b>Could not save.</b>,
+    //    }
+    //  );
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-    }
-    props.setToken(true);
-    setValidated(true);
-    navigate("/menu-principal");
+    // }
+    // props.setToken(true);
+    // setValidated(true);
+    // navigate("/menu-principal");
   };
 
   return (
@@ -50,6 +61,7 @@ const Login = (props) => {
           </Col> */}
         </Row>
       </Container>
+      <Toaster />
     </div>
   );
 }

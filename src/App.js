@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import './App.css';
 import Home from './home/Home';
@@ -38,6 +38,10 @@ function App() {
             <Route path="/login" element={<Login setToken={setToken} />} />
             <Route path="/registrar" element={<Registrar />} />
             <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+            <Route
+              path="*"
+              element={<Navigate to="/" />}
+            />
           </Routes>
         </Router>
       </div>
