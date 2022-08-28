@@ -1,26 +1,57 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import './Registrar.css';
 
 const Registrar = (props) => {
-    const navigate = useNavigate();
-    const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
+  const [validated, setValidated] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (event) => {
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
+  const handleSubmit = (event) => {
+    setSubmitted(true);
+    const form = event.currentTarget;
+    const formData = new FormData(event.target),
+
+    formDataObj = Object.fromEntries(formData.entries())
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (formDataObj.senha != formDataObj.confirmarsenha) {
+      setSubmitted(false);
+      toast.error("Senhas diferentes, por favor verifique as senhas digitadas.")
+    }
+
+    if (form.checkValidity() === false) {
+      setSubmitted(false);
+    }
+
+    fetch(
+      'https://mvp-impacta-lab.herokuapp.com/api/v1/users',
+      {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          birthday: "01/01/1001",
+          email: formDataObj.email,
+          name: formDataObj.nome,
+          password: formDataObj.senha,
+          user_type: formDataObj.tipo
+        })
       }
-
-    // const formData = new FormData(event.target),
-    // formDataObj = Object.fromEntries(formData.entries())
-    // console.log(formDataObj);
+    )
+    .then(function(response) {
+      setSubmitted(false);
       setValidated(true);
-    //   navigate("/login") //redireciona após registrar
-    };
-
+      navigate("/login");
+    })
+    .catch(function(error) {
+      toast.error(error.message);
+    });
+  };
 
   return (
     <div className="Registrar" style={{
@@ -49,12 +80,12 @@ const Registrar = (props) => {
         </Form.Group>
         <Form.Group controlId="form.tipo">
             <Form.Select name="tipo" required>
-              <option>Selecione o tipo de conta</option>
-              <option value="adulto">Adulto - Controle</option>
-              <option value="infantil">Infantil - Aprendizado</option>
+              <option value=''>Selecione o tipo de conta</option>
+              <option value="RESPONSIBLE">Adulto - Controle</option>
+              <option value="CHILDREN">Infantil - Aprendizado</option>
             </Form.Select><br/>
         </Form.Group>
-      <Button id="button" type="submit" size="lg">Registrar</Button><br/><br/>
+      <Button id="button" type="submit" size="lg" disabled={submitted}>Registrar</Button><br/><br/>
       </Form>
       <Row>
         <Col>
@@ -63,6 +94,7 @@ const Registrar = (props) => {
         </Col>
       </Row>
     </Container>
+    <Toaster />
     </div>
   );
 }

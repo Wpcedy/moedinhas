@@ -45,7 +45,7 @@ const MenuPrincipalDependente = (props) => {
               <img
                 src={extratoIcon}
                 alt="user"
-                onClick={() => navigate("/definir-dependente")}
+                onClick={() => navigate("/extrato")}
               />
             </Col>
             <Col>

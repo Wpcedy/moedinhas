@@ -1,21 +1,47 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 import './Login.css';
 
 const Login = (props) => {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+    event.preventDefault();
+    event.stopPropagation();
+
     if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+      setSubmitted(false);
     }
-    props.setToken(true);
-    setValidated(true);
-    navigate("/menu-principal");
+
+    const formData = new FormData(event.target),
+    formDataObj = Object.fromEntries(formData.entries())
+
+    fetch(
+      'https://mvp-impacta-lab.herokuapp.com/api/v1/users',
+      {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: formDataObj.email,
+          password: formDataObj.senha
+        })
+      }
+    )
+    .then(function(response) {
+      props.setToken(response.token);
+      setValidated(true);
+      navigate("/menu-principal");
+    })
+    .catch(function(error) {
+      toast.error(error.message);
+    });
   };
 
   return (
@@ -37,7 +63,7 @@ const Login = (props) => {
           <Form.Group controlId="form.senha">
               <Form.Control type="password" name="senha" placeholder="Senha" required />
           </Form.Group><br/>
-          <Button id="button" type="submit" size="lg">Log In</Button><br/><br/>
+          <Button id="button" type="submit" size="lg" disabled={submitted}>Log In</Button><br/><br/>
         </Form>
         <Row>
           <Col>
@@ -50,6 +76,7 @@ const Login = (props) => {
           </Col> */}
         </Row>
       </Container>
+      <Toaster />
     </div>
   );
 }
