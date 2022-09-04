@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
+import api from "../services/api";
 import './Login.css';
 
 const Login = (props) => {
@@ -21,25 +22,22 @@ const Login = (props) => {
     const formData = new FormData(event.target),
     formDataObj = Object.fromEntries(formData.entries())
 
-    fetch(
-      'https://mvp-impacta-lab.herokuapp.com/api/v1/users',
+    api.post(
+      "/auth",
+      JSON.stringify({
+        email: formDataObj.email,
+        password: formDataObj.senha
+      }),
       {
-        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: formDataObj.email,
-          password: formDataObj.senha
-        })
+        'Content-Type': 'application/json'
+        }
       }
-    )
-    .then(function(response) {
+    ).then((response) => {
       props.setToken(response.token);
       setValidated(true);
       navigate("/menu-principal");
-    })
-    .catch(function(error) {
+    }).catch((error) => {
       toast.error(error.message);
     });
   };

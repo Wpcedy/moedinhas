@@ -63,6 +63,10 @@ function App() {
           <Route path="/extrato" element={<ExtratoResponsavel />}  />
           <Route path="/objetivos" element={<ObjetivosResponsavel />}  />
           {/* <Route path="/controle-saldo" element={<Controle />}  /> */}
+          <Route
+            path="*"
+            element={<Navigate to="/menu-principal" />}
+          />
         </Routes>
       </Router>
     </div>

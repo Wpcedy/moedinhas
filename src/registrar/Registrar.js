@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 import './Registrar.css';
 
 const Registrar = (props) => {
@@ -26,29 +27,25 @@ const Registrar = (props) => {
     if (form.checkValidity() === false) {
       setSubmitted(false);
     }
-
-    fetch(
-      'https://mvp-impacta-lab.herokuapp.com/api/v1/users',
+    api.post(
+      "/users",
+      JSON.stringify({
+        birthday: "01/01/1001",
+        email: formDataObj.email,
+        name: formDataObj.nome,
+        password: formDataObj.senha,
+        user_type: formDataObj.tipo
+      }),
       {
-        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          birthday: "01/01/1001",
-          email: formDataObj.email,
-          name: formDataObj.nome,
-          password: formDataObj.senha,
-          user_type: formDataObj.tipo
-        })
+        'Content-Type': 'application/json'
+        }
       }
-    )
-    .then(function(response) {
+    ).then((response) => {
       setSubmitted(false);
       setValidated(true);
       navigate("/login");
-    })
-    .catch(function(error) {
+    }).catch((error) => {
       toast.error(error.message);
     });
   };
