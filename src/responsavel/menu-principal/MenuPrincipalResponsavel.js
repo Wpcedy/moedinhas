@@ -5,6 +5,7 @@ import userIcon from './user-icon.png';
 import extratoIcon from './extrato.png';
 import objetivosIcon from './objetivos.png';
 import controleIcon from './controle.png';
+import logoutIcon from './logout.png';
 
 const MenuPrincipalResponsavel = (props) => {
   const navigate = useNavigate();
@@ -19,14 +20,31 @@ const MenuPrincipalResponsavel = (props) => {
         padding: '25px 10px 25px 10px',
       }}>
         <Container>
-          <div id="alignTextRight">
-            <img
-              src={userIcon}
-              alt="user"
-              width="35" height="38"
-              onClick={() => navigate("/definir-dependente")}
-            />
-          </div>
+          <Row>
+            <Col>
+              <div id="alignTextLeft">
+                <img
+                  src={logoutIcon}
+                  alt="user"
+                  width="35" height="38"
+                  onClick={() => {
+                    props.setToken(null);
+                    navigate("/");
+                  }}
+                />
+              </div>
+            </Col>
+            <Col>
+              <div id="alignTextRight">
+                <img
+                  src={userIcon}
+                  alt="user"
+                  width="35" height="38"
+                  onClick={() => navigate("/definir-dependente")}
+                />
+              </div>
+            </Col>
+          </Row>
           <div>
               <h3 className="font">Minhas moedinhas</h3>
               <h4>Saldo R$</h4>

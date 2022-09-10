@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import userIcon from './user-icon.png';
 import extratoIcon from './extrato.png';
 import objetivosIcon from './objetivos.png';
+import logoutIcon from './logout.png';
 
 const MenuPrincipalDependente = (props) => {
   const navigate = useNavigate();
@@ -18,14 +19,31 @@ const MenuPrincipalDependente = (props) => {
         padding: '25px 10px 25px 10px',
       }}>
         <Container>
-          <div id="alignTextRight">
-            <img
-              src={userIcon}
-              alt="user"
-              width="35" height="38"
-              onClick={() => navigate("/definir-dependente")}
-            />
-          </div>
+          <Row>
+            <Col>
+              <div id="alignTextLeft">
+                <img
+                  src={logoutIcon}
+                  alt="user"
+                  width="35" height="38"
+                  onClick={() => {
+                    props.setToken(null);
+                    navigate("/");
+                  }}
+                />
+              </div>
+            </Col>
+            <Col>
+              <div id="alignTextRight">
+                <img
+                  src={userIcon}
+                  alt="user"
+                  width="35" height="38"
+                  onClick={() => navigate("/definir-responsavel")}
+                />
+              </div>
+            </Col>
+          </Row>
           <div>
               <h3 className="font">Minhas moedinhas</h3>
               <h4>Saldo R$</h4>

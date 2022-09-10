@@ -26,28 +26,32 @@ const Registrar = (props) => {
 
     if (form.checkValidity() === false) {
       setSubmitted(false);
-    }
-    api.post(
-      "/users",
-      JSON.stringify({
-        birthday: "01/01/1001",
-        email: formDataObj.email,
-        name: formDataObj.nome,
-        password: formDataObj.senha,
-        user_type: formDataObj.tipo
-      }),
-      {
-        headers: {
-        'Content-Type': 'application/json'
-        }
-      }
-    ).then((response) => {
-      setSubmitted(false);
       setValidated(true);
-      navigate("/login");
-    }).catch((error) => {
-      toast.error(error.message);
-    });
+    } else {
+      setValidated(true);
+
+      api.post(
+        "/users",
+        JSON.stringify({
+          birthday: "01/01/1001",
+          email: formDataObj.email,
+          name: formDataObj.nome,
+          password: formDataObj.senha,
+          user_type: formDataObj.tipo
+        }),
+        {
+          headers: {
+          'Content-Type': 'application/json'
+          }
+        }
+      ).then((response) => {
+        toast.success('Registro criado com sucesso!')
+        setSubmitted(false);
+        navigate("/login");
+      }).catch((error) => {
+        toast.error(error.message);
+      });
+    }
   };
 
   return (

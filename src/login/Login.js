@@ -11,35 +11,40 @@ const Login = (props) => {
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (event) => {
+    setSubmitted(true);
     const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
 
     if (form.checkValidity() === false) {
       setSubmitted(false);
+      setValidated(true);
+    } else {
+      const formData = new FormData(event.target),
+      formDataObj = Object.fromEntries(formData.entries())
+
+      setValidated(true);
+
+      api.post(
+        "/auth",
+        JSON.stringify({
+          email: formDataObj.email,
+          password: formDataObj.senha
+        }),
+        {
+          headers: {
+          'Content-Type': 'application/json'
+          }
+        }
+      ).then((response) => {
+        console.log(response.data)
+        props.setToken(response.data);
+        navigate("/menu-principal");
+      }).catch((error) => {
+        toast.error(error.message);
+      });
     }
 
-    const formData = new FormData(event.target),
-    formDataObj = Object.fromEntries(formData.entries())
-
-    api.post(
-      "/auth",
-      JSON.stringify({
-        email: formDataObj.email,
-        password: formDataObj.senha
-      }),
-      {
-        headers: {
-        'Content-Type': 'application/json'
-        }
-      }
-    ).then((response) => {
-      props.setToken(response.token);
-      setValidated(true);
-      navigate("/menu-principal");
-    }).catch((error) => {
-      toast.error(error.message);
-    });
   };
 
   return (

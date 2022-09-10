@@ -9,13 +9,13 @@ import Registrar from './registrar/Registrar';
 import RecuperarSenha from './recuperar-senha/RecuperarSenha';
 
 import MenuPrincipalResponsavel from './responsavel/menu-principal/MenuPrincipalResponsavel';
-import DefinirResponsavel from './responsavel/definir-dependente/DefinirDependente';
+import DefinirDependente from './responsavel/definir-dependente/DefinirDependente';
 import ExtratoResponsavel from './responsavel/extrato/ExtratoResponsavel';
 import ObjetivosResponsavel from './responsavel/objetivos/ObjetivosResponsavel';
 import Controle from './responsavel/controle/Controle';
 
 import MenuPrincipalDependente from './dependente/menu-principal/MenuPrincipalDependente';
-import DefinirDependente from './dependente/definir-responsavel/DefinirResponsavel';
+import DefinirResponsavel from './dependente/definir-responsavel/DefinirResponsavel';
 import ExtratoDependente from './dependente/extrato/ExtratoDependente';
 import ObjetivosDependente from './dependente/objetivos/ObjetivosDependente';
 
@@ -46,31 +46,55 @@ function App() {
         </Router>
       </div>
     );
+  } else if (token.user_type == "RESPONSIBLE") {
+    return (
+      <div className="App text-center vh-100" style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        color: 'white',
+        background: '#FDAA49',
+      }}>
+        <Router>
+          <Routes>
+            <Route path="/menu-principal" element={<MenuPrincipalResponsavel setToken={setToken} />}  />
+            <Route path="/definir-dependente" element={<DefinirDependente />}  />
+            <Route path="/extrato" element={<ExtratoResponsavel />}  />
+            <Route path="/objetivos" element={<ObjetivosResponsavel />}  />
+            <Route path="/controle-saldo" element={<Controle />}  />
+            <Route
+              path="*"
+              element={<Navigate to="/menu-principal" />}
+            />
+          </Routes>
+        </Router>
+      </div>
+    );
+  } else {
+    return (
+      <div className="App text-center vh-100" style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        color: 'white',
+        background: '#FDAA49',
+      }}>
+        <Router>
+          <Routes>
+            <Route path="/menu-principal" element={<MenuPrincipalDependente setToken={setToken} />}  />
+            <Route path="/definir-responsavel" element={<DefinirResponsavel />}  />
+            <Route path="/extrato" element={<ExtratoDependente />}  />
+            <Route path="/objetivos" element={<ObjetivosDependente />}  />
+            <Route
+              path="*"
+              element={<Navigate to="/menu-principal" />}
+            />
+          </Routes>
+        </Router>
+      </div>
+    );
   }
 
-  return (
-    <div className="App text-center vh-100" style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      color: 'white',
-      background: '#FDAA49',
-    }}>
-      <Router>
-        <Routes>
-          <Route path="/menu-principal" element={<MenuPrincipalResponsavel />}  />
-          <Route path="/definir-dependente" element={<DefinirResponsavel />}  />
-          <Route path="/extrato" element={<ExtratoResponsavel />}  />
-          <Route path="/objetivos" element={<ObjetivosResponsavel />}  />
-          {/* <Route path="/controle-saldo" element={<Controle />}  /> */}
-          <Route
-            path="*"
-            element={<Navigate to="/menu-principal" />}
-          />
-        </Routes>
-      </Router>
-    </div>
-  );
 }
 
 export default App;
