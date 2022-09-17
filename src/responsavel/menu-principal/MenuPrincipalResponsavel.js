@@ -71,14 +71,14 @@ const MenuPrincipalResponsavel = (props) => {
               <img
                 src={objetivosIcon}
                 alt="user"
-                onClick={() => navigate("/definir-dependente")}
+                onClick={() => navigate("/objetivos")}
               />
             </Col>
             <Col>
               <img
                 src={controleIcon}
                 alt="user"
-                onClick={() => navigate("/definir-dependente")}
+                onClick={() => navigate("/controle-saldo")}
               />
             </Col>
           </Row>

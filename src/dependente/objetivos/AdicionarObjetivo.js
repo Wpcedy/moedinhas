@@ -2,11 +2,11 @@ import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const ObjetivosDependente = (props) => {
+const AdicionarObjetivo = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="ObjetivosDependente">
+    <div className="AdicionarObjetivo">
       <div  style={{
         color: 'black',
         background: 'white',
@@ -15,16 +15,11 @@ const ObjetivosDependente = (props) => {
         padding: '25px 10px 25px 10px',
       }}>
         <Container>
-          <Row>
-            <Col>
-              <Button id="buttonTextBlue" onClick={() => navigate("/menu-principal")}>VOLTAR</Button>
-            </Col>
-            <Col>
-              <Button id="buttonTextBlue" onClick={() => navigate("/adicionar-objetivo")}>ADICIONAR</Button>
-            </Col>
-          </Row>
           <div id="alignTextLeft">
-              <h3 className="font">Objetivos</h3>
+              <Button id="buttonTextBlue" onClick={() => navigate("/objetivos")}>VOLTAR</Button>
+          </div>
+          <div id="alignTextLeft">
+              <h3 className="font">Adicionar Objetivo</h3>
           </div>
         </Container>
       </div>
@@ -32,4 +27,4 @@ const ObjetivosDependente = (props) => {
   );
 }
 
-export default ObjetivosDependente;
+export default AdicionarObjetivo;

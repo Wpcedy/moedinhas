@@ -70,7 +70,7 @@ const MenuPrincipalDependente = (props) => {
               <img
                 src={objetivosIcon}
                 alt="user"
-                onClick={() => navigate("/definir-dependente")}
+                onClick={() => navigate("/objetivos")}
               />
             </Col>
           </Row>

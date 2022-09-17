@@ -18,6 +18,7 @@ import MenuPrincipalDependente from './dependente/menu-principal/MenuPrincipalDe
 import DefinirResponsavel from './dependente/definir-responsavel/DefinirResponsavel';
 import ExtratoDependente from './dependente/extrato/ExtratoDependente';
 import ObjetivosDependente from './dependente/objetivos/ObjetivosDependente';
+import AdicionarObjetivoDependente from './dependente/objetivos/AdicionarObjetivo';
 
 function App() {
   const [token, setToken] = useState();
@@ -85,6 +86,7 @@ function App() {
             <Route path="/definir-responsavel" element={<DefinirResponsavel userId={token.id}  token={token.token} />}  />
             <Route path="/extrato" element={<ExtratoDependente />}  />
             <Route path="/objetivos" element={<ObjetivosDependente />}  />
+            <Route path="/adicionar-objetivo" element={<AdicionarObjetivoDependente />}  />
             <Route
               path="*"
               element={<Navigate to="/menu-principal" />}
