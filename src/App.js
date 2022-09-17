@@ -46,7 +46,7 @@ function App() {
         </Router>
       </div>
     );
-  } else if (token.user_type == "RESPONSIBLE") {
+  } else if (token.user_type === "RESPONSIBLE") {
     return (
       <div className="App text-center vh-100" style={{
         display: "flex",
@@ -58,7 +58,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/menu-principal" element={<MenuPrincipalResponsavel setToken={setToken} />}  />
-            <Route path="/definir-dependente" element={<DefinirDependente />}  />
+            <Route path="/definir-dependente" element={<DefinirDependente userId={token.id} token={token.token} />}  />
             <Route path="/extrato" element={<ExtratoResponsavel />}  />
             <Route path="/objetivos" element={<ObjetivosResponsavel />}  />
             <Route path="/controle-saldo" element={<Controle />}  />
@@ -82,7 +82,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/menu-principal" element={<MenuPrincipalDependente setToken={setToken} />}  />
-            <Route path="/definir-responsavel" element={<DefinirResponsavel />}  />
+            <Route path="/definir-responsavel" element={<DefinirResponsavel userId={token.id}  token={token.token} />}  />
             <Route path="/extrato" element={<ExtratoDependente />}  />
             <Route path="/objetivos" element={<ObjetivosDependente />}  />
             <Route

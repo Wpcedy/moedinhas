@@ -37,10 +37,11 @@ const Login = (props) => {
           }
         }
       ).then((response) => {
-        console.log(response.data)
         props.setToken(response.data);
+        setSubmitted(false);
         navigate("/menu-principal");
       }).catch((error) => {
+        setSubmitted(false);
         toast.error(error.message);
       });
     }

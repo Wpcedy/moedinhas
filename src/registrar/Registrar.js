@@ -19,7 +19,7 @@ const Registrar = (props) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (formDataObj.senha != formDataObj.confirmarsenha) {
+    if (formDataObj.senha !== formDataObj.confirmarsenha) {
       setSubmitted(false);
       toast.error("Senhas diferentes, por favor verifique as senhas digitadas.")
     }
@@ -45,10 +45,11 @@ const Registrar = (props) => {
           }
         }
       ).then((response) => {
-        toast.success('Registro criado com sucesso!')
+        toast.success('Registro criado com sucesso!');
         setSubmitted(false);
-        navigate("/login");
+        event.target.reset();
       }).catch((error) => {
+        setSubmitted(false);
         toast.error(error.message);
       });
     }
