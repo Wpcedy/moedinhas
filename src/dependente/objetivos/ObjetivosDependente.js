@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const ObjetivosDependente = (props) => {
@@ -26,6 +26,20 @@ const ObjetivosDependente = (props) => {
           <div id="alignTextLeft">
               <h3 className="font">Objetivos</h3>
           </div>
+          <Card>
+            <Card.Header>
+              <Card.Title>Card Title</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <Card.Text>
+                Some quick example text to build on the card title and make up the
+                bulk of the card's content.
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <Button id="button">Aprovar</Button>
+            </Card.Footer>
+          </Card>
         </Container>
       </div>
     </div>

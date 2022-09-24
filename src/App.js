@@ -86,7 +86,7 @@ function App() {
             <Route path="/definir-responsavel" element={<DefinirResponsavel userId={token.id}  token={token.token} />}  />
             <Route path="/extrato" element={<ExtratoDependente />}  />
             <Route path="/objetivos" element={<ObjetivosDependente />}  />
-            <Route path="/adicionar-objetivo" element={<AdicionarObjetivoDependente />}  />
+            <Route path="/adicionar-objetivo" element={<AdicionarObjetivoDependente userId={token.id} token={token.token} />}  />
             <Route
               path="*"
               element={<Navigate to="/menu-principal" />}
