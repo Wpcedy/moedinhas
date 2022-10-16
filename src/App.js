@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import axios from "axios";
 
 import './App.css';
 import Home from './home/Home';
@@ -19,9 +20,25 @@ import DefinirResponsavel from './dependente/definir-responsavel/DefinirResponsa
 import ExtratoDependente from './dependente/extrato/ExtratoDependente';
 import ObjetivosDependente from './dependente/objetivos/ObjetivosDependente';
 import AdicionarObjetivoDependente from './dependente/objetivos/AdicionarObjetivo';
+import Saldo from './dependente/saldo/Saldo';
 
 function App() {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(null);
+  const [account, setAccount] = useState(null);
+
+  useEffect(() => {
+    if (token !== null) {
+      axios({
+        method: 'get',
+        url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/accounts/'+token.id,
+        headers: { 'Authorization': 'Bearer ' + token.token }
+      }).then((response) => {
+        setAccount(response.data.id);
+      }).catch((error) => {
+        setAccount(null);
+      });
+    }
+  }, [token]);
 
   if(!token) {
     return (
@@ -58,11 +75,11 @@ function App() {
       }}>
         <Router>
           <Routes>
-            <Route path="/menu-principal" element={<MenuPrincipalResponsavel setToken={setToken} />}  />
+            <Route path="/menu-principal" element={<MenuPrincipalResponsavel token={token.token} setToken={setToken} accountId={account} />}  />
             <Route path="/definir-dependente" element={<DefinirDependente userId={token.id} token={token.token} />}  />
-            <Route path="/extrato" element={<ExtratoResponsavel />}  />
-            <Route path="/objetivos" element={<ObjetivosResponsavel />}  />
-            <Route path="/controle-saldo" element={<Controle />}  />
+            <Route path="/extrato" element={<ExtratoResponsavel token={token.token} accountId={account} />}  />
+            <Route path="/objetivos" element={<ObjetivosResponsavel token={token.token} />}  />
+            <Route path="/controle-saldo" element={<Controle token={token.token} userId={token.id} accountId={account} />}  />
             <Route
               path="*"
               element={<Navigate to="/menu-principal" />}
@@ -82,11 +99,12 @@ function App() {
       }}>
         <Router>
           <Routes>
-            <Route path="/menu-principal" element={<MenuPrincipalDependente setToken={setToken} />}  />
+            <Route path="/menu-principal" element={<MenuPrincipalDependente token={token.token} setToken={setToken} />}  />
             <Route path="/definir-responsavel" element={<DefinirResponsavel userId={token.id}  token={token.token} />}  />
-            <Route path="/extrato" element={<ExtratoDependente />}  />
-            <Route path="/objetivos" element={<ObjetivosDependente />}  />
+            <Route path="/extrato" element={<ExtratoDependente token={token.token} accountId={account} />}  />
+            <Route path="/objetivos" element={<ObjetivosDependente token={token.token} />}  />
             <Route path="/adicionar-objetivo" element={<AdicionarObjetivoDependente userId={token.id} token={token.token} />}  />
+            <Route path="/saldo" element={<Saldo token={token.token} userId={token.id} />}  />
             <Route
               path="*"
               element={<Navigate to="/menu-principal" />}

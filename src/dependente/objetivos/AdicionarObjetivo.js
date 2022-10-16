@@ -63,7 +63,7 @@ const AdicionarObjetivo = (props) => {
               <Button id="buttonTextBlue" onClick={() => navigate("/objetivos")}>VOLTAR</Button>
           </div>
           <div id="alignTextLeft">
-              <h3 className="font">Adicionar Objetivo</h3>
+              <h3 className="font">Adicionar<br />Objetivo</h3>
           </div>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group controlId="form.nome">

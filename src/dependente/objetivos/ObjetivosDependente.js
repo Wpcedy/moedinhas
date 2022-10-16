@@ -1,9 +1,25 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const ObjetivosDependente = (props) => {
   const navigate = useNavigate();
+  const [objetivos, setObjetivos] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/goals?size=20&reached=false',
+      headers: { 'Authorization': 'Bearer ' + props.token }
+    }).then((response) => {
+      setObjetivos(response.data.data);
+    }).catch((error) => {
+      toast.error(error.message);
+      setObjetivos([]);
+    });
+  }, []);
 
   return (
     <div className="ObjetivosDependente">
@@ -26,21 +42,26 @@ const ObjetivosDependente = (props) => {
           <div id="alignTextLeft">
               <h3 className="font">Objetivos</h3>
           </div>
-          <Card>
-            <Card.Header>
-              <Card.Title>Card Title</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the
-                bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <Button id="button">Aprovar</Button>
-            </Card.Footer>
-          </Card>
+          <div style={{maxHeight: 650, overflow: 'auto'}}>
+            {objetivos.map(
+              (objetivo,i) => (
+                <Card id="objetivo-{objetivo.id}" className="mb-4">
+                  <Card.Header>
+                    <Card.Title>{objetivo.name} - R${objetivo.cost},00</Card.Title>
+                  </Card.Header>
+                  <Card.Body>
+                    <Card.Text>
+                      {objetivo.description}
+                    </Card.Text>
+                  </Card.Body>
+                  <Card.Footer>
+                  </Card.Footer>
+                </Card>
+              )
+            )}
+          </div>
         </Container>
+        <Toaster />
       </div>
     </div>
   );

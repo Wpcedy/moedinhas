@@ -1,14 +1,30 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import userIcon from './user-icon.png';
 import extratoIcon from './extrato.png';
 import objetivosIcon from './objetivos.png';
 import controleIcon from './controle.png';
 import logoutIcon from './logout.png';
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 const MenuPrincipalResponsavel = (props) => {
   const navigate = useNavigate();
+  const [objetivos, setObjetivos] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/goals?size=3&reached=false',
+      headers: { 'Authorization': 'Bearer ' + props.token }
+    }).then((response) => {
+      setObjetivos(response.data.data);
+    }).catch((error) => {
+      toast.error(error.message);
+      setObjetivos([]);
+    });
+  }, []);
 
   return (
     <div className="MenuPrincipalResponsavel">
@@ -47,7 +63,6 @@ const MenuPrincipalResponsavel = (props) => {
           </Row>
           <div>
               <h3 className="font">Minhas moedinhas</h3>
-              <h4>Saldo R$</h4>
           </div>
         </Container>
       </div><br />
@@ -60,7 +75,7 @@ const MenuPrincipalResponsavel = (props) => {
       }}>
         <Container>
           <Row>
-            <Col>
+            <Col hidden={!props.accountId}>
               <img
                 src={extratoIcon}
                 alt="user"
@@ -74,7 +89,7 @@ const MenuPrincipalResponsavel = (props) => {
                 onClick={() => navigate("/objetivos")}
               />
             </Col>
-            <Col>
+            <Col hidden={!props.accountId}>
               <img
                 src={controleIcon}
                 alt="user"
@@ -92,8 +107,26 @@ const MenuPrincipalResponsavel = (props) => {
         padding: '25px 10px 25px 10px',
       }}>
         <Container>
-          objetivos atuais
+          <div style={{maxHeight: 300, overflow: 'auto'}}>
+            {objetivos.map(
+              (objetivo,i) => (
+                <Card id="objetivo-{objetivo.id}" className="mb-4">
+                  <Card.Header>
+                    <Card.Title>{objetivo.name} - R${objetivo.cost},00</Card.Title>
+                  </Card.Header>
+                  <Card.Body>
+                    <Card.Text>
+                      {objetivo.description}
+                    </Card.Text>
+                  </Card.Body>
+                  <Card.Footer>
+                  </Card.Footer>
+                </Card>
+              )
+            )}
+          </div>
         </Container>
+        <Toaster />
       </div>
     </div>
   );
