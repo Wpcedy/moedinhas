@@ -22,8 +22,6 @@ const ExtratoResponsavel = (props) => {
   }, []);
 
 
-// 1 - entrada
-// 2 - saida
   return (
     <div className="ExtratoResponsavel">
       <div  style={{
@@ -43,13 +41,13 @@ const ExtratoResponsavel = (props) => {
           <div style={{maxHeight: 650, overflow: 'auto'}}>
             {movimentos.map(
               (movimento,i) => (
-                <Card id="movimento-{movimento.id}" className="mb-4">
+                <Card className="mb-4">
                   <Card.Header>
-                    <Card.Title>Dia {movimento.created_at}</Card.Title>
+                    <Card.Title>Dia {movimento.date} - {movimento.type === "INPUT" ? 'Depositado' : 'Gasto'}</Card.Title>
                   </Card.Header>
                   <Card.Body>
                     <Card.Text>
-                      R${movimento.amount},00
+                      Valor: R${movimento.amount},00
                     </Card.Text>
                   </Card.Body>
                   <Card.Footer>

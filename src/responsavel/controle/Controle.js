@@ -13,6 +13,10 @@ const Controle = (props) => {
 
 
   useEffect(() => {
+    atualizaSaldo()
+  }, []);
+
+  const atualizaSaldo = () => {
     axios({
       method: 'get',
       url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/accounts/' + props.userId,
@@ -23,7 +27,7 @@ const Controle = (props) => {
       toast.error(error.message);
       setSaldo(0);
     });
-  }, []);
+  }
 
   const handleSubmit = (event) => {
     setSubmitted(true);
@@ -81,10 +85,10 @@ const Controle = (props) => {
               <h4>Saldo atual: R$ {saldo},00</h4><br />
           </div>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Form.Group controlId="form.Valor">
+            <Form.Group controlId="form.valor">
                 <InputGroup>
                   <InputGroup.Text>R$</InputGroup.Text>
-                  <Form.Control type="number" name="Valor" placeholder="Valor" required />
+                  <Form.Control type="number" name="valor" placeholder="Valor" required />
                   <InputGroup.Text>,00</InputGroup.Text>
                 </InputGroup><br/>
             </Form.Group>

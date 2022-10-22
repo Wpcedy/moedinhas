@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const ExtratoDependente = (props) => {
   const navigate = useNavigate();
   const [movimentos, setMovimentos] = useState([]);
-  console.log(props.accountId)
 
   useEffect(() => {
     axios({

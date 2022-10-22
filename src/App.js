@@ -25,18 +25,33 @@ import Saldo from './dependente/saldo/Saldo';
 function App() {
   const [token, setToken] = useState(null);
   const [account, setAccount] = useState(null);
+  const [dependente, setDependente] = useState(null);
 
   useEffect(() => {
     if (token !== null) {
-      axios({
-        method: 'get',
-        url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/accounts/'+token.id,
-        headers: { 'Authorization': 'Bearer ' + token.token }
-      }).then((response) => {
-        setAccount(response.data.id);
-      }).catch((error) => {
-        setAccount(null);
-      });
+      if (token.user_type === "RESPONSIBLE") {
+        axios({
+          method: 'get',
+          url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/users/'+token.id+'/dependent',
+          headers: { 'Authorization': 'Bearer ' + token.token }
+        }).then((response) => {
+          setAccount(response.data.account.id);
+          setDependente(response.data.id);
+        }).catch((error) => {
+          setAccount(null);
+          setDependente(null);
+        });
+      } else {
+        axios({
+          method: 'get',
+          url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/accounts/'+token.id,
+          headers: { 'Authorization': 'Bearer ' + token.token }
+        }).then((response) => {
+          setAccount(response.data.id);
+        }).catch((error) => {
+          setAccount(null);
+        });
+      }
     }
   }, [token]);
 
@@ -79,7 +94,7 @@ function App() {
             <Route path="/definir-dependente" element={<DefinirDependente userId={token.id} token={token.token} />}  />
             <Route path="/extrato" element={<ExtratoResponsavel token={token.token} accountId={account} />}  />
             <Route path="/objetivos" element={<ObjetivosResponsavel token={token.token} />}  />
-            <Route path="/controle-saldo" element={<Controle token={token.token} userId={token.id} accountId={account} />}  />
+            <Route path="/controle-saldo" element={<Controle token={token.token} userId={dependente} accountId={account} />}  />
             <Route
               path="*"
               element={<Navigate to="/menu-principal" />}
