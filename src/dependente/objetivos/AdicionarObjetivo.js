@@ -1,63 +1,45 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Container, Form, InputGroup } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
-const Controle = (props) => {
+const AdicionarObjetivo = (props) => {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [saldo, setSaldo] = useState(0);
-
-
-  useEffect(() => {
-    atualizaSaldo()
-  }, []);
-
-  const atualizaSaldo = () => {
-    axios({
-      method: 'get',
-      url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/accounts/' + props.userId,
-      headers: { 'Authorization': 'Bearer ' + props.token }
-    }).then((response) => {
-      setSaldo(response.data.balance);
-    }).catch((error) => {
-      toast.error(error.message);
-      setSaldo(0);
-    });
-  }
 
   const handleSubmit = (event) => {
     setSubmitted(true);
     const form = event.currentTarget;
+    const formData = new FormData(event.target),
+
+    formDataObj = Object.fromEntries(formData.entries())
     event.preventDefault();
     event.stopPropagation();
+
     if (form.checkValidity() === false) {
       setSubmitted(false);
       setValidated(true);
     } else {
-      var url = "/accounts/{accountId}";
-      const formData = new FormData(event.target),
-      formDataObj = Object.fromEntries(formData.entries())
-      url = url.replace('{accountId}', props.accountId);
-
       setValidated(true);
 
-      api.put(
-        url,
+      api.post(
+        "/goals",
         JSON.stringify({
-          amount: formDataObj.valor
+          name: formDataObj.nome,
+          cost: formDataObj.custo,
+          description: formDataObj.descricao,
+          user_id: props.userId
         }),
         {
           headers: {
-            'Authorization': 'Bearer ' + props.token,
-            'Content-Type': 'application/json'
+          'Authorization': 'Bearer ' + props.token,
+          'Content-Type': 'application/json'
           }
         }
       ).then((response) => {
-        toast.success('Saldo adicionado com sucesso!');
+        toast.success('Objetivo criado com sucesso!');
         setSubmitted(false);
         event.target.reset();
       }).catch((error) => {
@@ -68,7 +50,7 @@ const Controle = (props) => {
   };
 
   return (
-    <div className="Controle">
+    <div className="AdicionarObjetivo">
       <div  style={{
         color: 'black',
         background: 'white',
@@ -78,21 +60,26 @@ const Controle = (props) => {
       }}>
         <Container>
           <div id="alignTextLeft">
-              <Button id="buttonTextBlue" onClick={() => navigate("/menu-principal")}>VOLTAR</Button>
+              <Button id="buttonTextBlue" onClick={() => navigate("/objetivos")}>VOLTAR</Button>
           </div>
           <div id="alignTextLeft">
-              <h3 className="font">Controle de Saldo</h3>
-              <h4>Saldo atual: R$ {saldo},00</h4><br />
+              <h3 className="font">Adicionar<br />Objetivo</h3>
           </div>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Form.Group controlId="form.valor">
+            <Form.Group controlId="form.nome">
+                <Form.Control type="text" name="nome" placeholder="Nome do Objetivo" required /><br/>
+            </Form.Group>
+            <Form.Group controlId="form.custo">
                 <InputGroup>
                   <InputGroup.Text>R$</InputGroup.Text>
-                  <Form.Control type="number" name="valor" placeholder="Valor" required />
+                  <Form.Control type="number" name="custo" placeholder="Custo Estimado" required />
                   <InputGroup.Text>,00</InputGroup.Text>
                 </InputGroup><br/>
             </Form.Group>
-          <Button id="button" type="submit" size="lg" disabled={submitted}>Adicionar Saldo</Button><br/><br/>
+            <Form.Group controlId="form.descricao">
+                <Form.Control as="textarea" rows={3} maxLength={255} name="descricao" placeholder="Descrição" required /><br/>
+            </Form.Group>
+          <Button id="button" type="submit" size="lg" disabled={submitted}>Adicionar</Button><br/><br/>
           </Form>
         </Container>
         <Toaster />
@@ -101,4 +88,4 @@ const Controle = (props) => {
   );
 }
 
-export default Controle;
+export default AdicionarObjetivo;

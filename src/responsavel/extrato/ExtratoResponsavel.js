@@ -1,9 +1,26 @@
-import React from "react";
-import { Button, Container } from "react-bootstrap";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Container } from "react-bootstrap";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const ExtratoResponsavel = (props) => {
   const navigate = useNavigate();
+  const [movimentos, setMovimentos] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'https://mvp-impacta-lab.herokuapp.com/api/v1/transactions/'+props.accountId+'?size=20&reached=false',
+      headers: { 'Authorization': 'Bearer ' + props.token }
+    }).then((response) => {
+      setMovimentos(response.data.data);
+    }).catch((error) => {
+      toast.error(error.message);
+      setMovimentos([]);
+    });
+  }, []);
+
 
   return (
     <div className="ExtratoResponsavel">
@@ -21,7 +38,26 @@ const ExtratoResponsavel = (props) => {
           <div id="alignTextLeft">
               <h3 className="font">Movimentos<br/> Recentes</h3>
           </div>
+          <div style={{maxHeight: 650, overflow: 'auto'}}>
+            {movimentos.map(
+              (movimento,i) => (
+                <Card className="mb-4">
+                  <Card.Header>
+                    <Card.Title>Dia {movimento.date} - {movimento.type === "INPUT" ? 'Depositado' : 'Gasto'}</Card.Title>
+                  </Card.Header>
+                  <Card.Body>
+                    <Card.Text>
+                      Valor: R${movimento.amount},00
+                    </Card.Text>
+                  </Card.Body>
+                  <Card.Footer>
+                  </Card.Footer>
+                </Card>
+              )
+            )}
+          </div>
         </Container>
+        <Toaster />
       </div>
     </div>
   );
