@@ -22,7 +22,7 @@ const ObjetivosResponsavel = (props) => {
     }).then((response) => {
       setObjetivos(response.data.data);
     }).catch((error) => {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
       setObjetivos([]);
     });
   }
@@ -46,7 +46,7 @@ const ObjetivosResponsavel = (props) => {
       getObjetivos();
     }).catch((error) => {
       setSubmitted(false);
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     });
   }
 

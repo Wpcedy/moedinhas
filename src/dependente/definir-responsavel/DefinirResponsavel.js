@@ -42,7 +42,7 @@ const DefinirResponsavel = (props) => {
         event.target.reset();
       }).catch((error) => {
         setSubmitted(false);
-        toast.error(error.message);
+        toast.error(error.response.data.message);
       });
     }
   };

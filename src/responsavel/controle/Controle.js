@@ -24,7 +24,7 @@ const Controle = (props) => {
     }).then((response) => {
       setSaldo(response.data.balance);
     }).catch((error) => {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
       setSaldo(0);
     });
   }
@@ -57,12 +57,14 @@ const Controle = (props) => {
           }
         }
       ).then((response) => {
+        setSaldo(0);
+        atualizaSaldo()
         toast.success('Saldo adicionado com sucesso!');
         setSubmitted(false);
         event.target.reset();
       }).catch((error) => {
         setSubmitted(false);
-        toast.error(error.message);
+        toast.error(error.response.data.message);
       });
     }
   };

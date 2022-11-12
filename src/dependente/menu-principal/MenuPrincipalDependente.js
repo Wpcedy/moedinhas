@@ -21,7 +21,7 @@ const MenuPrincipalDependente = (props) => {
     }).then((response) => {
       setObjetivos(response.data.data);
     }).catch((error) => {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
       setObjetivos([]);
     });
   }, []);

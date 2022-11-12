@@ -22,36 +22,36 @@ const Registrar = (props) => {
     if (formDataObj.senha !== formDataObj.confirmarsenha) {
       setSubmitted(false);
       toast.error("Senhas diferentes, por favor verifique as senhas digitadas.")
-    }
-
-    if (form.checkValidity() === false) {
-      setSubmitted(false);
-      setValidated(true);
     } else {
-      setValidated(true);
+      if (form.checkValidity() === false) {
+        setSubmitted(false);
+        setValidated(true);
+      } else {
+        setValidated(true);
 
-      api.post(
-        "/users",
-        JSON.stringify({
-          birthday: "01/01/1001",
-          email: formDataObj.email,
-          name: formDataObj.nome,
-          password: formDataObj.senha,
-          user_type: formDataObj.tipo
-        }),
-        {
-          headers: {
-          'Content-Type': 'application/json'
+        api.post(
+          "/users",
+          JSON.stringify({
+            birthday: "01/01/1001",
+            email: formDataObj.email,
+            name: formDataObj.nome,
+            password: formDataObj.senha,
+            user_type: formDataObj.tipo
+          }),
+          {
+            headers: {
+            'Content-Type': 'application/json'
+            }
           }
-        }
-      ).then((response) => {
-        toast.success('Registro criado com sucesso!');
-        setSubmitted(false);
-        event.target.reset();
-      }).catch((error) => {
-        setSubmitted(false);
-        toast.error(error.message);
-      });
+        ).then((response) => {
+          toast.success('Registro criado com sucesso!');
+          setSubmitted(false);
+          event.target.reset();
+        }).catch((error) => {
+          setSubmitted(false);
+          toast.error(error.response.data.message);
+        });
+      }
     }
   };
 
